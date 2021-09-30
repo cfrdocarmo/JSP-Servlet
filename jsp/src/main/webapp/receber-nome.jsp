@@ -13,6 +13,7 @@
 	out.println("Nome: " + nome);
 
 	
+	
 	String idade = request.getParameter("idade");
 	out.println("Idade: " + idade);
 %>
