@@ -10,18 +10,34 @@
 
 	<h1>Bem Vindo - Projeto Prático JSP</h1>
 	
-	<form action="receber-nome.jsp">
-		<div>
-			<label>Nome: </label>
-			<input name="nome">
-		</div>
-		<div>
-			<label>Idade: </label>
-			<input name="idade">
-		</div>
-			<input type="submit">	
-	
+	<form action="ServletLogin" method="post">
+	<input type="hidden" value="<%=request.getParameter("url") %>" name="url">
+	<table>
+		<tr>
+			<td>
+				<label>Login: </label>
+			</td>
+			<td>
+				<input name="login"	type="text">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Senha: </label>
+			</td>
+			<td>
+				<input name="senha" type="password">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="submit" value="Enviar">	
+			</td>
+		</tr>
+	</table>
 	</form>
+
+	<h4>${msg}</h4>
 
 </body>
 </html>
