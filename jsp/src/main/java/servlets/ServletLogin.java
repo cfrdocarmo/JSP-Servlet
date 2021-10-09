@@ -24,7 +24,17 @@ public class ServletLogin extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		String acao = request.getParameter("acao");
+		
+		if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("logout")) {
+			request.getSession().invalidate(); //Invalida a sessão
+			RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");
+			redirecionar.forward(request, response);
+		} else {
+			doPost(request, response);
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,19 +55,19 @@ public class ServletLogin extends HttpServlet {
 					request.getSession().setAttribute("usuario", modelLogin.getLogin());
 					
 					if (url == null || url.equals("null") ) {
-						url = "principal/principal.jsp";
+						url = "/principal/principal.jsp";
 					}
 					
 					RequestDispatcher redirecionar = request.getRequestDispatcher(url);
 					redirecionar.forward(request, response);
 				} else {
-					RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");
+					RequestDispatcher redirecionar = request.getRequestDispatcher("index.jsp");
 					request.setAttribute("msg", "Informe  o login e senha corretamente!");
 					redirecionar.forward(request, response);
 				}
 				
 			} else {
-				RequestDispatcher redirecionar = request.getRequestDispatcher("index.jsp");
+				RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");
 				request.setAttribute("msg", "Informe  o login e senha corretamente!");
 				redirecionar.forward(request, response);
 			}
