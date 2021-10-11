@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import connection.SingleConnectionBanco;
-import model.ModelLogin;
+import model.ModelUsuario;
 
 public class DAOLoginRepository {
 
@@ -15,7 +15,7 @@ public class DAOLoginRepository {
 		connection = SingleConnectionBanco.getConnection();
 	}
 	
-	public boolean validarAutenticacao(ModelLogin modelLogin) throws Exception {
+	public boolean validarAutenticacao(ModelUsuario modelLogin) throws Exception {
 		
 		String sql = "select * from model_login where upper(login) = upper(?) and upper(senha) = upper(?) ";
 		

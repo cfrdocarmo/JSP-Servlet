@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.ModelLogin;
+import model.ModelUsuario;
 
 /*O chamado Controller são as servlets ou ServletLoginController*/
 @WebServlet(urlPatterns = {"/principal/ServletLogin", "/ServletLogin"})  /*Mapeamento de URL que vem da Tela*/
@@ -46,7 +46,7 @@ public class ServletLogin extends HttpServlet {
 		try {
 		
 			if(login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
-				ModelLogin modelLogin = new ModelLogin();
+				ModelUsuario modelLogin = new ModelUsuario();
 				modelLogin.setLogin(login);
 				modelLogin.setSenha(senha);
 				

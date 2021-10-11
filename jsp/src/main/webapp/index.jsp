@@ -50,7 +50,7 @@ border-color: #ffecb5;
 
 	<h5>Bem Vindo - Projeto Prático JSP</h5>
 
-	<form action="ServletLogin" method="post" class="row g-3 needs-validation" novalidate>
+	<form action="<%= request.getContextPath() %>/ServletLogin" method="post" class="row g-3 needs-validation" novalidate>
 	
 	<input type="hidden" value="<%=request.getParameter("url")%>"name="url"> 
 	
