@@ -78,6 +78,7 @@
 <!-- 												            <button class="btn btn-info waves-effect waves-light">Editar</button> -->
 <!-- 												            <button class="btn btn-warning waves-effect waves-light">Warning Button</button> -->
 												            <button type="button" class="btn btn-danger waves-effect waves-light" onclick="criarDeleteComAjax()">Excluir</button>
+												            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalUsuario">Pesquisar</button>
 <!-- 												            <button class="btn btn-inverse waves-effect waves-light">Inverse Button</button> -->
 <!-- 												            <button class="btn btn-disabled disabled waves-effect waves-light">Disabled Button</button> -->
                                                            
@@ -100,10 +101,81 @@
 	</div>
 
 
+	<!-- Modal -->
+<div class="modal fade" id="exampleModalUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pesquisa de Usuário</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <div class="modal-body">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="Nome" aria-label="nome" id="nomeBusca" aria-describedby="basic-addon2">
+				<div class="input-group-append">
+					<button class="btn btn-success waves-effect waves-light" type="button"  onclick="buscarUsuario()">Buscar</button>
+				</div>
+			</div>
+			
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">Id</th>
+			      <th scope="col">Nome</th>
+			      <th scope="col">Ver</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			
+			  </tbody>
+			</table>
+			
+		</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+<!--         <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
 	<!-- Required Jquery -->
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	
+	
+	
+	
+	
+	
+	
 	<script type="text/javascript">
+	
+		function buscarUsuario() {
+			
+			var nomeBusca = document.getElementById('nomeBusca').value;
+			var urlAction = document.getElementById('formUser').action;
+			
+			if(nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {  /*Validando que tem que ter conteudo pra consultar no banco*/
+				
+				$.ajax({
+					
+					method: "get",
+					url: urlAction,
+					data: "nomeBusca=" + nomeBusca + '&acao=buscarUserAjax',
+					success: function (response) {
+						
+					}
+				
+					
+				}).fail(function(xhr, status, errorThrown) {
+					alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
+				});
+				
+			}
+		}
+	
 		
 		function criarDeleteComAjax() {
 			
