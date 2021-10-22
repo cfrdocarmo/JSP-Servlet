@@ -119,7 +119,7 @@
 				</div>
 			</div>
 			
-			<table class="table">
+			<table class="table" id="tabelaResultados">
 			  <thead>
 			    <tr>
 			      <th scope="col">Id</th>
@@ -165,7 +165,14 @@
 					url: urlAction,
 					data: "nomeBusca=" + nomeBusca + '&acao=buscarUserAjax',
 					success: function (response) {
+						var json = JSON.parse(response);
 						
+						$('#tabelaResultados > tbody > tr').remove();
+						
+						for(var p=0; p < json.length; p++){
+							
+							$('#tabelaResultados > tbody').append('<tr><td>'+json.[p].nome+'</td></tr>');
+						}
 					}
 				
 					
