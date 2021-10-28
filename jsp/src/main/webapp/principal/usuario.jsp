@@ -119,6 +119,7 @@
 				</div>
 			</div>
 			
+			<div style="height:300px; overflow: scroll; "> 
 			<table class="table" id="tabelaResultados">
 			  <thead>
 			    <tr>
@@ -131,9 +132,10 @@
 			
 			  </tbody>
 			</table>
-			
+			</div>
 		</div>
       <div class="modal-footer">
+      	<span style="float: left;" id="totalResultados"></span>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 <!--         <button type="button" class="btn btn-primary">Save changes</button> -->
       </div>
@@ -151,6 +153,13 @@
 	
 	
 	<script type="text/javascript">
+	
+	
+		function verEditar(id) {
+			var urlAction = document.getElementById('formUser').action;
+			window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
+			
+		}
 	
 		function buscarUsuario() {
 			
@@ -171,8 +180,9 @@
 						
 						for(var p=0; p < json.length; p++){
 							
-							$('#tabelaResultados > tbody').append('<tr><td>'+json.[p].nome+'</td></tr>');
+							$('#tabelaResultados > tbody').append('<tr><td>'+json[p].nome+'</td><td>'+json[p].nome+'</td><td><button type="button" onclick="verEditar('+json[p].id+')" class="btn btn-info">Ver</button></td></tr>');
 						}
+						document.getElementById('totalResultados').textContent = 'Resultados: ' + json.length;
 					}
 				
 					
