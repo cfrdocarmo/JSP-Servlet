@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelUsuario;
 
-@WebServlet("/ServletUsuarioController")
+@WebServlet(urlPatterns =  {"/ServletUsuarioController"})
 public class ServletUsuarioController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -30,6 +30,10 @@ public class ServletUsuarioController extends HttpServlet {
 				String acao = request.getParameter("acao");
 				
 				if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
+					
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					request.setAttribute("modelUsuarios", modelUsuarios);
+					
 					String idUSer = request.getParameter("id");
 					daoUsuarioRepository.deletaUser(idUSer);
 					
@@ -58,11 +62,24 @@ public class ServletUsuarioController extends HttpServlet {
 					
 					ModelUsuario modelUsuario = daoUsuarioRepository.consultaUsuarioId(id);
 					
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					request.setAttribute("modelUsuarios", modelUsuarios);
+					
 					request.setAttribute("msg", "Usuário em edição");
 					request.setAttribute("modelUsuario", modelUsuario);
 					request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+				
+				} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")) {
+					
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					
+					request.setAttribute("modelUsuarios", modelUsuarios);
+					request.setAttribute("msg", "Usuários carregados");
+					request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 					
 				}else {
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					request.setAttribute("modelUsuarios", modelUsuarios);
 					request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 				}
 				
@@ -79,6 +96,9 @@ public class ServletUsuarioController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
+			
+			List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+			request.setAttribute("modelUsuarios", modelUsuarios);
 			
 			String msg = "Operação realizada com sucesso!";
 			

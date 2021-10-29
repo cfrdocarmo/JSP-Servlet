@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +52,37 @@ public class DAOUsuarioRepository {
 		
 		return this.consultaUsuario(objeto.getLogin());
 	}
+	
+	
+	
+	public List<ModelUsuario> consultarUsuarioList() throws Exception{
+		
+		List<ModelUsuario> retorno = new ArrayList<>();
+		
+		String sql = "SELECT * FROM model_login";
+		
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		while(resultSet.next()) {
+			
+			ModelUsuario modelUsuario =  new ModelUsuario();
+			
+			modelUsuario.setId(resultSet.getLong("id"));
+			modelUsuario.setEmail(resultSet.getString("email"));
+			modelUsuario.setLogin(resultSet.getString("login"));
+			modelUsuario.setNome(resultSet.getString("nome"));
+			modelUsuario.setSenha(resultSet.getString("senha"));
+			
+			retorno.add(modelUsuario);
+		}
+		
+		return retorno;
+		
+	}
+	
+	
+	
 	
 	
 	public List<ModelUsuario> consultarUsuarioList(String nome) throws Exception{

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,12 +76,8 @@
                                                           
                                                             <button type="button" class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>
                                                             <button class="btn btn-success waves-effect waves-light">Salvar</button>
-<!-- 												            <button class="btn btn-info waves-effect waves-light">Editar</button> -->
-<!-- 												            <button class="btn btn-warning waves-effect waves-light">Warning Button</button> -->
 												            <button type="button" class="btn btn-danger waves-effect waves-light" onclick="criarDeleteComAjax()">Excluir</button>
 												            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalUsuario">Pesquisar</button>
-<!-- 												            <button class="btn btn-inverse waves-effect waves-light">Inverse Button</button> -->
-<!-- 												            <button class="btn btn-disabled disabled waves-effect waves-light">Disabled Button</button> -->
                                                            
                                                         </form>
 													</div>
@@ -88,6 +85,30 @@
 											</div>
 										</div>
 										<span id="msg">${msg}</span>
+
+										<div style="height: 300px; overflow: scroll;">
+											<table class="table" id="tabelaResultadosViews">
+												<thead>
+													<tr>
+														<th scope="col">Id</th>
+														<th scope="col">Nome</th>
+														<th scope="col">Ver</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${modelUsuarios}" var="mdl">
+														<tr>
+															<td><c:out value="${mdl.id}"></c:out></td>
+															<td><c:out value="${mdl.nome}"></c:out></td>
+															<td><a style="padding-top: 2px; padding-bottom: 2px; padding-left: 10px; padding-right: 10px;" 
+																		class="btn btn-success waves-effect waves-light" 
+																		href="<%= request.getContextPath() %>/ServletUsuarioController?acao=buscarEditar&id=${mdl.id}">Ver</a></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+
 									</div>
 									<!-- Page-body end -->
 								</div>
