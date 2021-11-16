@@ -9,13 +9,12 @@ import dao.DAOUsuarioRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelUsuario;
 
 @WebServlet(urlPatterns =  {"/ServletUsuarioController"})
-public class ServletUsuarioController extends HttpServlet {
+public class ServletUsuarioController extends ServletGenericUtil {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +30,7 @@ public class ServletUsuarioController extends HttpServlet {
 				
 				if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
 					
-					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 					request.setAttribute("modelUsuarios", modelUsuarios);
 					
 					String idUSer = request.getParameter("id");
@@ -49,7 +48,7 @@ public class ServletUsuarioController extends HttpServlet {
 				} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUserAjax")) {
 					String nomeBusca = request.getParameter("nomeBusca");
 					
-					List<ModelUsuario> dadosJsonUser =  daoUsuarioRepository.consultarUsuarioList(nomeBusca);
+					List<ModelUsuario> dadosJsonUser =  daoUsuarioRepository.consultarUsuarioList(nomeBusca, super.getUserLogado(request));
 					System.out.println(dadosJsonUser);
 					ObjectMapper mapper = new ObjectMapper();
 					String json = mapper.writeValueAsString(dadosJsonUser);
@@ -60,9 +59,9 @@ public class ServletUsuarioController extends HttpServlet {
 				} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
 					String id = request.getParameter("id");
 					
-					ModelUsuario modelUsuario = daoUsuarioRepository.consultaUsuarioId(id);
+					ModelUsuario modelUsuario = daoUsuarioRepository.consultaUsuarioId(id, super.getUserLogado(request));
 					
-					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 					request.setAttribute("modelUsuarios", modelUsuarios);
 					
 					request.setAttribute("msg", "Usuário em edição");
@@ -71,14 +70,14 @@ public class ServletUsuarioController extends HttpServlet {
 				
 				} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")) {
 					
-					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 					
 					request.setAttribute("modelUsuarios", modelUsuarios);
 					request.setAttribute("msg", "Usuários carregados");
 					request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 					
 				}else {
-					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+					List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 					request.setAttribute("modelUsuarios", modelUsuarios);
 					request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 				}
@@ -97,7 +96,7 @@ public class ServletUsuarioController extends HttpServlet {
 		
 		try {
 			
-			List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList();
+			List<ModelUsuario> modelUsuarios = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 			request.setAttribute("modelUsuarios", modelUsuarios);
 			
 			String msg = "Operação realizada com sucesso!";
@@ -126,7 +125,7 @@ public class ServletUsuarioController extends HttpServlet {
 					msg = "Atualizado com sucesso!";
 				}
 				
-				modelUsuario = daoUsuarioRepository.gravarUsuario(modelUsuario);
+				modelUsuario = daoUsuarioRepository.gravarUsuario(modelUsuario, super.getUserLogado(request));
 			}
 			
 			request.setAttribute("msg", msg);

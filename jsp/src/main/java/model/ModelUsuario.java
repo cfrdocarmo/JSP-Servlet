@@ -11,6 +11,7 @@ public class ModelUsuario implements Serializable{
 	private String email;
 	private String senha;
 	private String login;
+	private boolean useradmin;
 	
 	
 	public boolean isNovo() {
@@ -21,6 +22,21 @@ public class ModelUsuario implements Serializable{
 		}
 		return id == null;
 	}
+	
+	
+	public boolean getUseradmin() {
+		return useradmin;
+	}
+
+	public void setUseradmin(boolean useradmin) {
+		this.useradmin = useradmin;
+	}
+
+
+
+
+
+
 
 	public String getLogin() {
 		return login;
