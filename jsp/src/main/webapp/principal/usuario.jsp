@@ -1,3 +1,4 @@
+<%@page import="model.ModelUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%> 
@@ -63,7 +64,42 @@
                                                                 <span class="form-bar"></span>
                                                                 <label class="float-label">Email (exa@gmail.com):</label>
                                                             </div>
-                                                            <div class="form-group form-default form-static-label">
+
+															<div class="form-group form-default form-static-label">
+																<select class="form-control"
+																	aria-label="Default select example" name="perfil">
+																	<option disabled="disabled">[SELECIONE O PERFIL]</option>
+																	<option value="ADMIN" <% 
+																		ModelUsuario modelUsuario = (ModelUsuario) request.getAttribute("modelUsuario");
+																		if(modelUsuario != null && modelUsuario.getPerfil().equals("ADMIN")) {
+																			out.print(" ");
+																			out.print("selected=\"selected\"");
+																			out.print(" ");
+																	} %>>Admin</option>
+																	
+																	<option value="SECRETARIA" <% 
+																		modelUsuario = (ModelUsuario) request.getAttribute("modelUsuario");
+																		if(modelUsuario != null && modelUsuario.getPerfil().equals("SECRETARIA")) {
+																			out.print(" ");
+																			out.print("selected=\"selected\"");
+																			out.print(" ");
+																	} %>>Secretária</option>
+																	
+																	<option value="AUXILIAR" <%
+																		modelUsuario = (ModelUsuario) request.getAttribute("modelUsuario");
+																		if(modelUsuario != null && modelUsuario.getPerfil().equals("AUXILIAR")) {
+																			out.print(" ");
+																			out.print("selected=\"selected\"");
+																			out.print(" ");
+																	} %>>Auxiliar</option>
+																</select> 
+																<span class="form-bar"></span>
+																<label class="float-label">Perfil:</label>
+															</div>
+
+
+
+															<div class="form-group form-default form-static-label">
                                                                 <input type="text" name="login" id="login" class="form-control" placeholder="Login" required="required" autocomplete="off" value="${modelUsuario.login}">
                                                                 <span class="form-bar"></span>
                                                                 <label class="float-label">Login:</label>

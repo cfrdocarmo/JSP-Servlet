@@ -2,8 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-public class ModelUsuario implements Serializable{
-	
+public class ModelUsuario implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -12,18 +12,25 @@ public class ModelUsuario implements Serializable{
 	private String senha;
 	private String login;
 	private boolean useradmin;
-	
-	
+	private String perfil;
+
 	public boolean isNovo() {
-		if(this.id == null) {
-			return true;  /*INSERIR NOVO*/
+		if (this.id == null) {
+			return true; /* INSERIR NOVO */
 		} else if (this.id != null && this.id > 0) {
-			return false; /*ATUALIZAR*/
+			return false; /* ATUALIZAR */
 		}
 		return id == null;
 	}
-	
-	
+
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+
 	public boolean getUseradmin() {
 		return useradmin;
 	}
@@ -31,12 +38,6 @@ public class ModelUsuario implements Serializable{
 	public void setUseradmin(boolean useradmin) {
 		this.useradmin = useradmin;
 	}
-
-
-
-
-
-
 
 	public String getLogin() {
 		return login;
@@ -77,8 +78,5 @@ public class ModelUsuario implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
-	
+
 }
