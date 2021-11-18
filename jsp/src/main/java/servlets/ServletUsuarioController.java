@@ -8,11 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.DAOUsuarioRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelUsuario;
 
+@MultipartConfig
 @WebServlet(urlPatterns =  {"/ServletUsuarioController"})
 public class ServletUsuarioController extends ServletGenericUtil {
 	
@@ -107,6 +109,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
 			String perfil = request.getParameter("perfil");
+			String sexo = request.getParameter("sexo");
 			
 			ModelUsuario modelUsuario = new ModelUsuario();
 			
@@ -116,6 +119,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			modelUsuario.setLogin(login);
 			modelUsuario.setSenha(senha);
 			modelUsuario.setPerfil(perfil);
+			modelUsuario.setSexo(sexo);
 			
 			if (daoUsuarioRepository.validarLogin(modelUsuario.getLogin()) && modelUsuario.getId() == null) {
 				msg = "Já existe usuário com o mesmo login, informe outro!";

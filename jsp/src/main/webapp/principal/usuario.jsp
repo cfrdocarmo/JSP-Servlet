@@ -45,7 +45,7 @@
 													<div class="card-block">
 														<h4 class="sub-title">Cadastro de Usuário</h4>
 
-														<form class="form-material" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post" id="formUser">
+														<form class="form-material" enctype="multipart/form-data" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post" id="formUser">
                                                            
                                                            <input type="hidden" name="acao" id="acao" value="">
                                                            
@@ -54,6 +54,14 @@
                                                                 <span class="form-bar"></span>
                                                                 <label class="float-label">Id:</label>
                                                             </div>
+                                                            
+                                                             <div class="form-group form-default input-group mb-4">
+                                                             	<div class="input-group-prepend">
+                                                             		<img alt="Imagem user" src="https://assets.algaworks.com/portal/thumbnails/ignicao-react.png" width="70px">
+                                                             	</div>
+                                                             	<input type="file" class="form-control-file" style="margin-top: 15px; margin-left: 5px">
+                                                             </div>
+                                                            
                                                             <div class="form-group form-default form-static-label">
                                                                 <input type="text" name="nome" id="nome" class="form-control" required="required" placeholder="Nome" value="${modelUsuario.nome}">
                                                                 <span class="form-bar"></span>
@@ -108,6 +116,23 @@
                                                                 <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha" required="required" autocomplete="off" value="${modelUsuario.senha}">
                                                                 <span class="form-bar"></span>
                                                                 <label class="float-label">Senha:</label>
+                                                            </div>
+                                                            
+                                                            <div class="form-group form-default form-static-label">
+                                                            	<input type="radio" name="sexo" checked="checked" value="MASCULINO" <%
+																		modelUsuario = (ModelUsuario) request.getAttribute("modelUsuario");
+																		if(modelUsuario != null && modelUsuario.getSexo().equals("MASCULINO")) {
+																			out.print(" ");
+																			out.print("checked=\"checked\"");
+																			out.print(" ");
+																	} %> >Masculino</>
+                                                            	<input type="radio" name="sexo" value="FEMININO"  <%
+																		modelUsuario = (ModelUsuario) request.getAttribute("modelUsuario");
+																		if(modelUsuario != null && modelUsuario.getSexo().equals("FEMININO")) {
+																			out.print(" ");
+																			out.print("checked=\"checked\"");
+																			out.print(" ");
+																	} %> >Feminino</>
                                                             </div>
                                                           
                                                             <button type="button" class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>

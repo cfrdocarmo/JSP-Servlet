@@ -13,6 +13,9 @@ public class ModelUsuario implements Serializable {
 	private String login;
 	private boolean useradmin;
 	private String perfil;
+	private String sexo;
+	private String fotoUser;
+	private String extensaoFotoUser;
 
 	public boolean isNovo() {
 		if (this.id == null) {
@@ -21,6 +24,40 @@ public class ModelUsuario implements Serializable {
 			return false; /* ATUALIZAR */
 		}
 		return id == null;
+	}
+
+	
+	
+	public String getFotoUser() {
+		return fotoUser;
+	}
+
+
+
+	public void setFotoUser(String fotoUser) {
+		this.fotoUser = fotoUser;
+	}
+
+
+
+	public String getExtensaoFotoUser() {
+		return extensaoFotoUser;
+	}
+
+
+
+	public void setExtensaoFotoUser(String extensaoFotoUser) {
+		this.extensaoFotoUser = extensaoFotoUser;
+	}
+
+
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
 	}
 
 	public String getPerfil() {
