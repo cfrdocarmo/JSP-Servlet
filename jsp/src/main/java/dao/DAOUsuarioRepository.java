@@ -22,7 +22,7 @@ public class DAOUsuarioRepository {
 		
 		if(objeto.isNovo()) {
 		
-			String sql = "INSERT INTO model_login (login, senha, nome, email, usuario_id, perfil, sexo) VALUES (?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO model_login (login, senha, nome, email, usuario_id, sexo, perfil) VALUES (?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			preparedStatement.setString(1, objeto.getLogin());
@@ -30,12 +30,26 @@ public class DAOUsuarioRepository {
 			preparedStatement.setString(3, objeto.getNome());
 			preparedStatement.setString(4, objeto.getEmail());
 			preparedStatement.setLong(5, userLogado);
-			preparedStatement.setString(6, objeto.getPerfil());
-			preparedStatement.setString(7, objeto.getSexo());
+			preparedStatement.setString(6, objeto.getSexo());
+			preparedStatement.setString(7, objeto.getPerfil());
+			
 		
 			preparedStatement.execute();
 			
 			connection.commit();
+			
+				if (objeto.getFotoUser() != null && !objeto.getFotoUser().isEmpty()) {
+					sql = "UPDATE model_login SET fotoUser =?, extensaoFotoUser=? WHERE login=?";
+					
+					preparedStatement = connection.prepareStatement(sql);
+					
+					preparedStatement.setString(1, objeto.getFotoUser());
+					preparedStatement.setString(2, objeto.getExtensaoFotoUser());
+					preparedStatement.setString(3, objeto.getLogin());
+					
+					preparedStatement.execute();
+					connection.commit();
+				}
 		
 		} else {
 			
@@ -52,6 +66,19 @@ public class DAOUsuarioRepository {
 			preparedStatement.executeUpdate();
 			
 			connection.commit();
+			
+			if (objeto.getFotoUser() != null && !objeto.getFotoUser().isEmpty()) {
+				sql = "UPDATE model_login SET fotoUser =?, extensaoFotoUser=? WHERE id=?";
+				
+				preparedStatement = connection.prepareStatement(sql);
+				
+				preparedStatement.setString(1, objeto.getFotoUser());
+				preparedStatement.setString(2, objeto.getExtensaoFotoUser());
+				preparedStatement.setLong(3, objeto.getId());
+				
+				preparedStatement.execute();
+				connection.commit();
+			}
 			
 		}
 		
@@ -80,6 +107,7 @@ public class DAOUsuarioRepository {
 			modelUsuario.setSenha(resultSet.getString("senha"));
 			modelUsuario.setPerfil(resultSet.getString("perfil"));
 			modelUsuario.setSexo(resultSet.getString("sexo"));
+			modelUsuario.setFotoUser(resultSet.getString("fotoUser"));
 			
 			
 			retorno.add(modelUsuario);
@@ -116,6 +144,7 @@ public class DAOUsuarioRepository {
 			modelUsuario.setSenha(resultSet.getString("senha"));
 			modelUsuario.setPerfil(resultSet.getString("perfil"));
 			modelUsuario.setSexo(resultSet.getString("sexo"));
+			modelUsuario.setFotoUser(resultSet.getString("fotoUser"));
 
 			retorno.add(modelUsuario);
 		}
@@ -144,6 +173,7 @@ public ModelUsuario consultaUsuario(String login, Long userLogado) throws Except
 			modelUsuario.setSenha(resultSet.getString("senha"));
 			modelUsuario.setPerfil(resultSet.getString("perfil"));
 			modelUsuario.setSexo(resultSet.getString("sexo"));
+			modelUsuario.setFotoUser(resultSet.getString("fotoUser"));
 
 		}
 		
@@ -171,6 +201,7 @@ public ModelUsuario consultaUsuario(String login, Long userLogado) throws Except
 			modelUsuario.setSenha(resultSet.getString("senha"));
 			modelUsuario.setPerfil(resultSet.getString("perfil"));
 			modelUsuario.setSexo(resultSet.getString("sexo"));
+			modelUsuario.setFotoUser(resultSet.getString("fotoUser"));
 
 		}
 		
@@ -200,6 +231,7 @@ public ModelUsuario consultaUsuario(String login, Long userLogado) throws Except
 			modelUsuario.setUseradmin(resultSet.getBoolean("useradmin"));
 			modelUsuario.setPerfil(resultSet.getString("perfil"));
 			modelUsuario.setSexo(resultSet.getString("sexo"));
+			modelUsuario.setFotoUser(resultSet.getString("fotoUser"));
 
 
 		}
@@ -231,7 +263,8 @@ public ModelUsuario consultaUsuario(String login, Long userLogado) throws Except
 				modelUsuario.setSenha(resultSet.getString("senha"));
 				modelUsuario.setPerfil(resultSet.getString("perfil"));
 				modelUsuario.setSexo(resultSet.getString("sexo"));
-
+				modelUsuario.setFotoUser(resultSet.getString("fotoUser"));
+				modelUsuario.setExtensaoFotoUser(resultSet.getString("extensaoFotoUser"));
 			}
 			
 			return modelUsuario;

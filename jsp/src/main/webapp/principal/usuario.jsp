@@ -57,9 +57,30 @@
                                                             
                                                              <div class="form-group form-default input-group mb-4">
                                                              	<div class="input-group-prepend">
-                                                             		<img alt="Imagem user" src="https://assets.algaworks.com/portal/thumbnails/ignicao-react.png" width="70px">
+                                                             		<c:if test="${modelUsuario.fotoUser != '' && modelUsuario.fotoUser != null}">
+                                                             			<a href="<%= request.getContextPath() %>/ServletUsuarioController?acao=downloadFoto&id=${modelUsuario.id}">
+                                                             				<img alt="Imagem User" id="fotoEmBase64" src="${modelUsuario.fotoUser}" width="70px">
+                                                             			</a>
+                                                             		</c:if>
+                                                             		<c:if test="${modelUsuario.fotoUser == '' || modelUsuario.fotoUser == null}">
+                                                             			<c:if test="${modelUsuario.sexo == 'FEMININO'}">
+                                                             				<a href="<%= request.getContextPath() %>/ServletUsuarioController?acao=downloadFoto&id=${modelUsuario.id}">
+                                                             					<img alt="Imagem User"  src="<%= request.getContextPath() %>/assets/images/icon-user-female.png" width="70px">
+                                                             				</a>
+                                                             			</c:if>
+                                                             			<c:if test="${modelUsuario.sexo == 'MASCULINO'}">
+                                                             				<a href="<%= request.getContextPath() %>/ServletUsuarioController?acao=downloadFoto&id=${modelUsuario.id}">
+                                                             					<img alt="Imagem User"  src="<%= request.getContextPath() %>/assets/images/faq_man.png" width="70px">
+                                                             				</a>
+                                                             			</c:if>
+                                                             			<c:if test="${modelUsuario.sexo != 'FEMININO' && modelUsuario.sexo != 'MASCULINO'}">
+                                                             				<a href="<%= request.getContextPath() %>/ServletUsuarioController?acao=downloadFoto&id=${modelUsuario.id}">
+                                                             					<img alt="Imagem User"  src="<%= request.getContextPath() %>/assets/images/icon-user-female.png" width="70px">
+                                                             				</a>
+                                                             			</c:if>
+                                                             		</c:if>
                                                              	</div>
-                                                             	<input type="file" class="form-control-file" style="margin-top: 15px; margin-left: 5px">
+                                                             	<input type="file" id="fileFoto" name="fileFoto" onchange="visualizarImg('fotoEmBase64', 'fileFoto');" accept="image/*" class="form-control-file" style="margin-top: 15px; margin-left: 5px">
                                                              </div>
                                                             
                                                             <div class="form-group form-default form-static-label">
@@ -137,7 +158,7 @@
                                                           
                                                             <button type="button" class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>
                                                             <button class="btn btn-success waves-effect waves-light">Salvar</button>
-												            <button type="button" class="btn btn-danger waves-effect waves-light" onclick="criarDeleteComAjax()">Excluir</button>
+												            <button type="button" class="btn btn-danger waves-effect waves-light" onclick="criarDelete()">Excluir</button>
 												            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalUsuario">Pesquisar</button>
                                                            
                                                         </form>
@@ -236,6 +257,23 @@
 	
 	<script type="text/javascript">
 	
+		function visualizarImg(fotoEmBase64, fileFoto) {
+
+			var preview = document.getElementById(fotoEmBase64);    // Campo IMG do HTML
+			var fileUser = document.getElementById(fileFoto).files[0];
+			var reader = new FileReader();
+			
+			reader.onloadend = function() {
+				preview.src = reader.result;                        // Carrega a foto na tela
+			}
+			
+			if (fileUser){
+				reader.readAsDataURL(fileUser);                     // Preview da imagem
+			} else {
+				preview.src = '';
+			}
+		}
+	
 	
 		function verEditar(id) {
 			var urlAction = document.getElementById('formUser').action;
@@ -292,6 +330,7 @@
 						
 						limparForm();
 						document.getElementById('msg').textContent = response;
+						
 					}
 				
 					
